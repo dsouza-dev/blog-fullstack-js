@@ -13,6 +13,12 @@ const Post = () => {
           setPost(response.data)
         }
       )
+    axios.get(`http://localhost:3001/posts/byId/${id}`)
+      .then(
+        (response) => {
+          setPost(response.data)
+        }
+      )
   }, [])
 
   return (
@@ -24,7 +30,13 @@ const Post = () => {
           <div className='footer'>{post.username}</div>
         </div>
       </div>
-      <div className='rightSide'>Seção de comentarios</div>
+      <div className='rightSide'>
+        <div className='addCommentContainer'>
+          <input type='text' placeholder='Escreva ...' autoComplete='off' />
+          <button>Adicionar Comentário</button>
+        </div>
+        <div className='listOfComments'></div>
+      </div>
     </div>
   )
 }

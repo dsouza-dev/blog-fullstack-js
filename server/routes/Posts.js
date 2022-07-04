@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Posts, sequelize } = require('../models')
+const { Posts } = require('../models')
 
 router.get("/", async (req, res) => {
   const listPosts = await Posts.findAll()
