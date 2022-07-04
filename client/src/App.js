@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import CreatePost from './pages/CreatePost';
 import Post from './pages/Post'
 import NavBar from './Layout/NavBar';
+import Login from './pages/Login';
+
 
 const App = () => {
   return (
@@ -13,6 +15,7 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/post/:id" element={<Post />} />
         </Routes>
