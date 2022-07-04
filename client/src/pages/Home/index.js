@@ -19,7 +19,7 @@ const Home = () => {
       {
         listPost.map((value, key) => {
           return (
-            <div className='post' onClick={() => { history(`/post/${value.id}`) }}>
+            <div key={key} className='post' onClick={() => { history(`/post/${value.id}`) }}>
               <div className='title'> Titulo: {value.title} </div>
               <div className='body'> Texto: {value.postText} </div>
               <div className='footer'> Autor: {value.username}  </div>
