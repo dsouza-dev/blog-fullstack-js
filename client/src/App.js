@@ -6,6 +6,7 @@ import CreatePost from './pages/CreatePost';
 import Post from './pages/Post'
 import NavBar from './Layout/NavBar';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/post/:id" element={<Post />} />
         </Routes>
