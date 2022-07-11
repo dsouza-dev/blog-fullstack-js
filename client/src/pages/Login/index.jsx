@@ -16,10 +16,24 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <input type='text' onChange={(e) => { setUser(e.target.value) }} />
-      <input type="password" onChange={(e) => { setPass(e.target.value) }} />
-      <button type='submit' onClick={login}>Entrar</button>
+    <div className="loginContainer">
+      <div className="login"><h1>Login</h1></div>
+      <label>Usuário:</label>
+      <input
+        type="text"
+        onChange={(event) => {
+          setUser(event.target.value);
+        }}
+      />
+      <label>Senha:</label>
+      <input
+        type="password"
+        onChange={(event) => {
+          setPass(event.target.value);
+        }}
+      />
+
+      <button onClick={login}> Login </button>
     </div>
   )
 }

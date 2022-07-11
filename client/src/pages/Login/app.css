@@ -3,8 +3,14 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
-  padding-top: 100px;
+  height: 100%;
+  padding-top: 40px;
+}
+
+.login {
+  text-decoration: dotted;
+  margin-bottom: 20px;
+  font-family: cursive;
 }
 
 .loginContainer input,
@@ -19,6 +25,7 @@ button {
 .loginContainer button {
   background-color: dodgerblue;
   color: white;
+  cursor: pointer;
 }
 
 .loginContainer input {

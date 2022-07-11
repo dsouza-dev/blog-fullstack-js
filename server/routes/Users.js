@@ -18,10 +18,10 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body
 
   const user = await Users.findOne({ where: { username: username } })
-  if (!user) return res.status(400).json({ 'success': false, 'error': 'Usuário não existe' })
+  if (!user) return res.json({ 'success': false, 'error': 'Usuário não existe' })
 
   bcrypt.compare(password, user.password).then((match) => {
-    if (!match) return res.status(400).json({ 'success': false, 'error': 'Usuário e Senha não correspondem' })
+    if (!match) return res.json({ 'success': false, 'error': 'Usuário e Senha não correspondem' })
     return res.json({ 'success': true })
   })
 })

@@ -28,6 +28,13 @@
   font-size: 20px;
 }
 
+.register {
+  text-decoration: dotted;
+  margin-bottom: 20px;
+  font-family: cursive;
+  text-align: center;
+}
+
 .formContainer button {
   margin-top: 15px;
   height: 40px;
