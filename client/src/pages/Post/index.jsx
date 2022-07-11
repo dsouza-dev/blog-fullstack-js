@@ -25,8 +25,15 @@ const Post = () => {
   }, [])
 
   const addComment = () => {
-    axios.post("http://localhost:3001/comments", { commentBody: newComment, PostId: id })
-      .then(() => {
+    axios.post("http://localhost:3001/comments", { commentBody: newComment, PostId: id },
+    {
+      headers: {
+        accessToken: sessionStorage.getItem("accessToken")
+      }
+    }
+    )
+      .then((response) => {
+        if (response.data.error) return alert('Você não está logado')
         const commentToAdd = { commentBody: newComment }
         setComments([...comments, commentToAdd])
         setNewComment("")
