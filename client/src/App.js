@@ -43,20 +43,22 @@ const App = () => {
       <AuthContext.Provider value={{ authState, setAuthState }}>
       <Router>
           <div className='navbar'>
+            <div className='links'>
             <Link to="/">Inicio</Link>
             <Link to="/createpost">Criar um Post</Link>
-            {!authState.status ? (
+            {!authState.status && (
               <>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Registro</Link>
               </>
-            ) : (
-                <button onClick={logout}>Sair</button>
             )}
-
-            <h1>{authState.username}</h1>
-
+            </div>
+          <div className="loggedInContainer">
+            <h1>{authState.username} </h1>
+            {authState.status && <button onClick={logout}> Logout</button>}
           </div>
+          </div>
+            
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
