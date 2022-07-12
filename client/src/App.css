@@ -16,3 +16,10 @@
   text-decoration: none;
   color: white;
 }
+
+.navbar button {
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 5px;
+}

@@ -25,6 +25,11 @@ const App = () => {
     })
   }, [])
 
+  const logout = () => {
+    localStorage.removeItem('accessToken')
+    setAuthState(false)
+  }
+
   return (
     <div className='App'>
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -32,11 +37,13 @@ const App = () => {
           <div className='navbar'>
             <Link to="/">Inicio</Link>
             <Link to="/createpost">Criar um Post</Link>
-            {!authState && (
+            {!authState ? (
               <>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Registro</Link>
               </>
+            ) : (
+                <button onClick={logout}>Sair</button>
             )}
           </div>
         <Routes>
