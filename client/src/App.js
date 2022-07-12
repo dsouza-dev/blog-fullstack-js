@@ -13,21 +13,29 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 
 const App = () => {
-  const [authState, setAuthState] = useState(false)
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    status: false
+  })
 
   useEffect(() => {
     axios.get('http://localhost:3001/auth/auth', { headers: {
       accessToken: localStorage.getItem('accessToken')
     }})
     .then((response) => {
-      if (response.data.error) return setAuthState(false)
-      return setAuthState(true)
+      if (response.data.error) return setAuthState({ ...authState, status: false })
+      return setAuthState({
+        username: response.data.username,
+        id: response.data.id,
+        status: true
+      })
     })
   }, [])
 
   const logout = () => {
     localStorage.removeItem('accessToken')
-    setAuthState(false)
+    setAuthState({username: "", id: 0, status: false })
   }
 
   return (
@@ -37,7 +45,7 @@ const App = () => {
           <div className='navbar'>
             <Link to="/">Inicio</Link>
             <Link to="/createpost">Criar um Post</Link>
-            {!authState ? (
+            {!authState.status ? (
               <>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Registro</Link>
@@ -45,6 +53,9 @@ const App = () => {
             ) : (
                 <button onClick={logout}>Sair</button>
             )}
+
+            <h1>{authState.username}</h1>
+
           </div>
         <Routes>
           <Route path="/" element={<Home />} />

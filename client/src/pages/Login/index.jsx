@@ -17,7 +17,7 @@ const Login = () => {
       .then((response) => {
         if (response.data.error) return alert(response.data.error)
         localStorage.setItem("accessToken", response.data.accessToken)
-        setAuthState(true)
+        setAuthState({username: response.data.username, id: response.data.id, status: true})
         history('/')
       })
   }

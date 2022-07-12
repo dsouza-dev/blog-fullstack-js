@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../helpers/AuthContext'
 import './app.css'
 
 const Post = () => {
@@ -8,6 +9,7 @@ const Post = () => {
   const [post, setPost] = useState({})
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState("")
+  const { authState } = useContext(AuthContext)
 
   useEffect(() => {
     axios.get(`http://localhost:3001/posts/byId/${id}`)
@@ -40,6 +42,16 @@ const Post = () => {
       })
   }
 
+  const deleteComment = (id) => {
+    axios.delete(`http://localhost:3001/comments/${id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") }})
+    .then(() => {
+      setComments(comments.filter((val) => {
+        return val.id !== id
+      }))
+    }) 
+  }
+
   return (
     <div className='postPage'>
       <div className='leftSide'>
@@ -58,7 +70,10 @@ const Post = () => {
           {comments.map((comment, key) => {
             return <div key={key} className='comment'>
               {comment.commentBody}
+              <br />
               <label>Username: {comment.username}</label>
+              <br />
+              {authState.username === comment.username && <button onClick={(() => deleteComment(comment.id))}>X</button>}
               </div>
           })}
         </div>
