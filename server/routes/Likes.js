@@ -7,7 +7,19 @@ router.post("/", validateToken, async (req, res) => {
   const { PostId } = req.body
   const UserId = req.user.id
 
-  await Likes.create({ PostId: PostId, UserId: UserId })
+  const found = await Likes.findOne({where: 
+    { PostId: PostId, UserId: UserId }
+  })
+  
+  if (!found) {
+    await Likes.create({ PostId: PostId, UserId: UserId })
+  } else {
+    await Likes.destroy({
+      where: {
+        PostId: PostId, UserId: UserId
+      }
+    })
+  }
   return res.json({success: true})
 })
 
