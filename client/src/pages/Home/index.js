@@ -19,9 +19,23 @@ const Home = () => {
   
   const likeAPost = (postId) => {
     axios.post('http://localhost:3001/likes', {PostId: postId }, {headers: { accessToken: localStorage.getItem('accessToken') }})
-    .then((response) => {
-      alert(response.data.message)
-    })
+      .then((response) => {
+        setListPost(
+          listPost.map((post) => {
+            if (post.id === postId) {
+              if (response.data.liked) {
+                return { ...post, Likes: [...post.Likes, 0] };
+              } else {
+                const likesArray = post.Likes;
+                likesArray.pop();
+                return { ...post, Likes: likesArray };
+              }
+            } else {
+              return post;
+            }
+          })
+        );
+      });
   }
 
   return (
