@@ -5,7 +5,9 @@ import './app.css'
 
 const Home = () => {
   const [listPost, setListPost] = useState([])
+
   let history = useNavigate()
+  
   useEffect(() => {
     axios.get('http://localhost:3001/posts')
       .then(
@@ -14,15 +16,37 @@ const Home = () => {
         }
       )
   }, [])
+  
+  const likeAPost = (postId) => {
+    axios.post('http://localhost:3001/likes', {PostId: postId }, {headers: { accessToken: localStorage.getItem('accessToken') }})
+    .then((response) => {
+      alert(response.data.message)
+    })
+  }
+
   return (
     <div>
       {
         listPost.map((value, key) => {
           return (
-            <div key={key} className='post' onClick={() => { history(`/post/${value.id}`) }}>
-              <div className='title'> Titulo: {value.title} </div>
-              <div className='body'> Texto: {value.postText} </div>
-              <div className='footer'> Autor: {value.username}  </div>
+            <div key={key} className='post'>
+              <div className='title'>
+                {value.title} 
+                </div>
+              <div className='body' 
+              onClick={() => { history(`/post/${value.id}`) }}
+              >
+                {value.postText} 
+                </div>
+              <div className='footer'>
+                {value.username}
+                {""}
+                <button onClick={() => likeAPost(value.id)}>
+                  {""}
+                  Curtir
+                  </button>
+                  <label>{value.Likes.length}</label>
+                  </div>
               <hr />
             </div>
           )
