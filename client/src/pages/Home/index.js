@@ -1,20 +1,25 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import './app.css'
 
 const Home = () => {
   const [listPost, setListPost] = useState([])
+  const [likedPosts, setLikedPosts] = useState([])
 
   let history = useNavigate()
   
   useEffect(() => {
-    axios.get('http://localhost:3001/posts')
+    axios.get('http://localhost:3001/posts', { headers: { accessToken: localStorage.getItem('accessToken') } })
       .then(
         (response) => {
-          setListPost(response.data)
-        }
-      )
+          setListPost(response.data.listPosts)
+          setLikedPosts(response.data.likedPosts.map((like) => {
+               return like.PostId 
+              })
+            )
+        })
   }, [])
   
   const likeAPost = (postId) => {
@@ -24,18 +29,27 @@ const Home = () => {
           listPost.map((post) => {
             if (post.id === postId) {
               if (response.data.liked) {
-                return { ...post, Likes: [...post.Likes, 0] };
+                return { ...post, Likes: [...post.Likes, 0] }
               } else {
-                const likesArray = post.Likes;
-                likesArray.pop();
-                return { ...post, Likes: likesArray };
+                const likesArray = post.Likes
+                likesArray.pop()
+                return { ...post, Likes: likesArray }
               }
             } else {
-              return post;
+              return post
             }
           })
-        );
-      });
+        )
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id !== postId
+            })
+          )
+        } else {
+          setLikedPosts([...likedPosts, postId])
+        }
+      })
   }
 
   return (
@@ -53,14 +67,16 @@ const Home = () => {
                 {value.postText} 
                 </div>
               <div className='footer'>
-                {value.username}
-                {""}
-                <button onClick={() => likeAPost(value.id)}>
-                  {""}
-                  Curtir
-                  </button>
+                <div className='username'>{value.username}</div>
+                <div className="buttons">
+                  <ThumbUpAltIcon onClick={() => likeAPost(value.id)}
+                    className={
+                      likedPosts.includes(value.id) ? "unlikeBttn" : "likeBttn"
+                    }
+                    />
                   <label>{value.Likes.length}</label>
-                  </div>
+                </div>
+              </div>
               <hr />
             </div>
           )
