@@ -11,6 +11,7 @@ import CreatePost from './pages/CreatePost';
 import Post from './pages/Post'
 import Login from './pages/Login';
 import Register from './pages/Register';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   const [authState, setAuthState] = useState({
@@ -65,6 +66,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/post/:id" element={<Post />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
       </AuthContext.Provider>
