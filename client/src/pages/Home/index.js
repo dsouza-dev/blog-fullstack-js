@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import { AuthContext } from '../../helpers/AuthContext'
 import './app.css'
@@ -73,7 +73,7 @@ const Home = () => {
                 {value.postText} 
                 </div>
               <div className='footer'>
-                <div className='username'>{value.username}</div>
+                <div className='username'><Link to={`/profile/${value.UserId}`}>{value.username}</Link></div>
                 <div className="buttons">
                   <ThumbUpAltIcon onClick={() => likeAPost(value.id)}
                     className={
