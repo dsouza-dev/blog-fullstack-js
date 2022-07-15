@@ -45,12 +45,15 @@ const App = () => {
       <Router>
           <div className='navbar'>
             <div className='links'>
-            <Link to="/">Inicio</Link>
-            <Link to="/createpost">Criar um Post</Link>
-            {!authState.status && (
+            {!authState.status ? (
               <>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Registro</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/">Inicio</Link>
+                <Link to="/createpost">Criar um Post</Link>
               </>
             )}
             </div>

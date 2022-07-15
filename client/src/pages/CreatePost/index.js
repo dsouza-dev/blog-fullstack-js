@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import './app.css'
 import * as Yup from 'yup'
 import axios from 'axios'
-
+import { AuthContext } from '../../helpers/AuthContext'
 
 const CreatePost = () => {
+  const { authState } = useContext(AuthContext)
+
   let history = useNavigate()
 
   const initialValues = {
     title: '',
     postText: '',
-    username: ''
   }
+
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      history('/login')
+    }
+  }, [])
+
   const onSubmit = (data) => {
-    return axios.post('http://localhost:3001/posts', data)
+    return axios.post('http://localhost:3001/posts', data, { headers: { accessToken: localStorage.getItem('accessToken') } })
       .then((response) => {
         history("/")
       })
@@ -26,7 +34,6 @@ const CreatePost = () => {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('O título é obrigatório'),
     postText: Yup.string().required('O texto é obrigatório'),
-    username: Yup.string().required('O autor é obrigatório').min(3, 'deve ter pelo menos 3 caracteres').max(32, 'deve ter no máximo 32 caracteres')
   })
 
   return (
@@ -42,11 +49,8 @@ const CreatePost = () => {
           <ErrorMessage name="postText" component="span" />
           <Field autoComplete='off' id='inputCreatePost' name='postText' placeholder='(ex: Post)' />
 
-          <label>Autor</label>
-          <ErrorMessage name="username" component="span" />
-          <Field autoComplete='off' id='inputCreatePost' name='username' placeholder='(ex: Autor123)' />
-
           <button type='submit'>Criar Post</button>
+        
         </Form>
       </Formik>
     </div >
