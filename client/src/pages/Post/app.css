@@ -77,3 +77,12 @@ button {
 #individual .body {
   font-size: 25px;
 }
+
+.btnDelete {
+  text-align: center;
+  align-items: flex-end;
+  margin: 0 0 0 310px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #666666;
+}

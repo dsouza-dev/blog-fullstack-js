@@ -73,7 +73,7 @@ const Home = () => {
                 {value.postText} 
                 </div>
               <div className='footer'>
-                <div className='username'><Link to={`/profile/${value.UserId}`}>{value.username}</Link></div>
+                <div className='username'><Link className='linkTo' to={`/profile/${value.UserId}`}>{value.username}</Link></div>
                 <div className="buttons">
                   <ThumbUpAltIcon onClick={() => likeAPost(value.id)}
                     className={

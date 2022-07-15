@@ -76,3 +76,9 @@ body {
   margin-right: 20px;
   margin-left: 10px;
 }
+
+.linkTo {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
